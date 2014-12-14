@@ -5,7 +5,7 @@
 #include "pins.h"
 
 
-int current_display_mode = RTI_PAL;
+int current_display_mode = RTI_NTSC;
 bool send_brightness = true;
 char current_brightness_level = 15;
 
@@ -24,10 +24,12 @@ void rti_loop() {
 	rti_bitbang_tx(display_modes[current_display_mode]);
 	delay(rti_delay);
 	
-	if (send_brightness)
+	if (send_brightness) {
 		rti_bitbang_tx(brightness_levels[current_brightness_level]);
-	else
+		send_brightness=false;
+	} else {
 		rti_bitbang_tx(0x40);
+	}
 	
 	delay(rti_delay);
 	
@@ -36,7 +38,7 @@ void rti_loop() {
 }
 
 void rti_set_brightness(char level) {
-	if (level>0 && level<16) {
+	if (level>=0 && level<16) {
 		current_brightness_level = level;
 		send_brightness = true;
 	}

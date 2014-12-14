@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #ifndef PINS_H
 #define PINS_H
 
@@ -16,3 +17,4 @@ const uint8_t CANBUS_CS_PIN = 10;
 
 
 #endif
+
